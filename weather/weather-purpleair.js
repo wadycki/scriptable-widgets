@@ -220,11 +220,10 @@ async function run() {
 		let adj2 = parseInt(data.adj2, 10)
 		let hum = parseInt(data.hum, 10)
 		let dataAverage = adj1;
+
 		if (adj2 >= 0.0) {
 			dataAverage = ((adj1 + adj2) / 2);
 		}
-    
-		
 		
 		// Apply EPA draft adjustment for wood smoke and PurpleAir
 		// from https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=349513&Lab=CEMM&simplesearch=0&showcriteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=08/25/2018
@@ -246,7 +245,14 @@ async function run() {
 		addText(wg, data.loc, new Color(level.textColor), Font.mediumSystemFont(12))
 
 		// Temp Label
-		addText(wg, temp_c + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+		switch (units) {
+			case 'c':
+				addText(wg, temp_c + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				break
+			default:
+				addText(wg, temp_f + '°F', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				break
+		}
 		addSpacer(wg, 10)
 		
 		// AQI Prefix
