@@ -41,9 +41,10 @@ const parseWidgetParameter = function(widgetParameter) {
 
 	parametersComponents.forEach(parameter => {
 		const parameterComponents = parameter.split(':')
-		result[parameterComponents] = parameterComponents[1]
+		result[parameterComponents[0]] = parameterComponents[1]
 	})
 
+    console.log('result' + JSON.stringify(result))
 	return result
 }
 
@@ -225,13 +226,14 @@ async function run() {
 		// from https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=349513&Lab=CEMM&simplesearch=0&showcriteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=08/25/2018
 		
 		let epaPM = ( (0.524 * dataAverage) - (.0085 * hum) + 5.71 )
-		let aqitext = aqiFromPM(epaPM).toString()
+        let aqi = aqiFromPM(epaPM)
+		let aqitext = aqi.toString()
 		let level = calculateLevel(aqi)		
 
 		// End setup
 
 		// Assign URL
-		wg.url = 'https://www.purpleair.com/map?opt=1/i/mAQI/a10/cC0&select=' + SENSOR_ID + '#14/' + data.lat + '/' + data.lon
+		wg.url = 'https://www.purpleair.com/map?opt=1/i/mAQI/a10/cC0&select=' + sensor_id + '#14/' + data.lat + '/' + data.lon
 
 		// ======= Start drawing
 		setBackgroundGradient(wg,new LinearGradient(), new Color(level.startColor), new Color(level.endColor))
