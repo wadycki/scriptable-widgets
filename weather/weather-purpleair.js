@@ -219,7 +219,11 @@ async function run() {
 		let adj1 = parseInt(data.adj1, 10)
 		let adj2 = parseInt(data.adj2, 10)
 		let hum = parseInt(data.hum, 10)
-		let dataAverage = ((adj1 + adj2)/2);
+		let dataAverage = adj1;
+		if (adj2 >= 0.0) {
+			dataAverage = ((adj1 + adj2) / 2);
+		}
+    
 		
 		
 		// Apply EPA draft adjustment for wood smoke and PurpleAir
