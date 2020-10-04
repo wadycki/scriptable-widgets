@@ -1,6 +1,9 @@
 const API_URL = 'https://www.purpleair.com/json?show=';
 let utilities = importModule('utilities.js')
 
+module.exports.purpleAirURL = function(data) {
+    return 'https://www.purpleair.com/map?opt=1/i/mAQI/a10/cC0&select=' + data.sensor_id + '#14/' + data.lat + '/' + data.lon
+}
 
 async function _getSensorData(id) {
 	let req = new Request(API_URL + id)
@@ -34,6 +37,7 @@ async function _getSensorData(id) {
     }
 
 	return {
+		'sensor_id': id,
 		'val': json.results[0].Stats,
 		'pm2_average': dataAverage,
 		'adj1': adj1,

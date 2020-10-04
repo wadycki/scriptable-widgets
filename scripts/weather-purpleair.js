@@ -43,7 +43,7 @@ async function run() {
 		// End setup
 
 		// Assign URL
-		wg.url = 'https://www.purpleair.com/map?opt=1/i/mAQI/a10/cC0&select=' + sensor_id + '#14/' + data.lat + '/' + data.lon
+		wg.url = utilities_purpleair.purpleAirURL(data)
 
 		// ======= Start drawing
 		utilities_listwidget.setBackgroundGradient(wg,new LinearGradient(), new Color(level.startColor), new Color(level.endColor))
