@@ -82,10 +82,10 @@ async function run() {
 		// Temp
 		switch (units) {
 			case 'c':
-				addText(wg, utilities.convertFtoC(temp_f) + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				utilities_listwidget.addText(wg, utilities.convertFtoC(temp_f) + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
 				break
 			default:
-				addText(wg, temp_f + '°F', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				utilities_listwidget.addText(wg, temp_f + '°F', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
 				break
 		}
 		utilities_listwidget.addSpacer(wg, 10)

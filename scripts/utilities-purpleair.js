@@ -18,4 +18,4 @@ async function _getSensorData(id) {
 	}
 }
 
-module.exports.getSensorData = _getSensorData(id)
+module.exports.getSensorData = _getSensorData
