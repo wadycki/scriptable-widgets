@@ -36,37 +36,9 @@ async function run() {
 		
 		let data = await utilities_purpleair.getSensorData(sensor_id)
 		console.log(data)
-		
-		let stats = JSON.parse(data.val)
-		let partLive = parseInt(stats.v1, 10)
-		let partTime = parseInt(stats.v2, 10)
-		let partDelta = partTime - partLive
-		let temp_f = data.temp_f		
-		
-		if ( partDelta > 5 ) {
-			theTrend = ' Improving' 
-		} else if ( partDelta < -5 ) {
-			theTrend = ' Worsening'
-		} else {
-			 theTrend = ''
-		}
-		
-		// Start Setup
-		let adj1 = parseInt(data.adj1, 10)
-		let adj2 = parseInt(data.adj2, 10)
-		let hum = parseInt(data.hum, 10)
-		let dataAverage = adj1;
-
-		if (adj2 >= 0.0) {
-			dataAverage = ((adj1 + adj2) / 2);
-		}
-		
-		// Apply EPA draft adjustment for wood smoke and PurpleAir
-		// from https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=349513&Lab=CEMM&simplesearch=0&showcriteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=08/25/2018
-		
-		let epaPM = utilities_aqi.epaPM25toAQI(dataAverage, hum)
+				
+		let epaPM = utilities_aqi.epaPM25toAQI(data.pm2_average, data.hum)
         let aqi = utilities_aqi.aqiFromPM(epaPM)
-		let aqitext = aqi.toString()
 		let level = utilities_aqi.calculateLevel(aqi)
 		// End setup
 
@@ -82,19 +54,19 @@ async function run() {
 		// Temp
 		switch (units) {
 			case 'c':
-				utilities_listwidget.addText(wg, utilities.convertFtoC(temp_f) + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				utilities_listwidget.addText(wg, data.temp_c + '°C', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
 				break
 			default:
-				utilities_listwidget.addText(wg, temp_f + '°F', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
+				utilities_listwidget.addText(wg, data.temp_f + '°F', new Color(level.textColor), Font.semiboldRoundedSystemFont(20))
 				break
 		}
 		utilities_listwidget.addSpacer(wg, 10)
 		
 		// AQI Prefix
-		utilities_listwidget.addText(wg, 'AQI' + theTrend, new Color(level.textColor), Font.regularSystemFont(10))
+		utilities_listwidget.addText(wg, 'AQI' + data.trend, new Color(level.textColor), Font.regularSystemFont(10))
 		
 		// AQI Number string
-		utilities_listwidget.addText(wg, aqitext, new Color(level.textColor), Font.semiboldRoundedSystemFont(20), 45)
+		utilities_listwidget.addText(wg, aqi.toString(), new Color(level.textColor), Font.semiboldRoundedSystemFont(20), 45)
 		
 		// AQI Level 
 		utilities_listwidget.addText(wg, level.label, new Color(level.textColor), Font.boldSystemFont(12))

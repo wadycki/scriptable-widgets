@@ -81,6 +81,8 @@ module.exports.calcAQI = function(Cp, Ih, Il, BPh, BPl) {
 	return Math.round((a/b) * c + Il);     
 }
 
+// Apply EPA draft adjustment for wood smoke and PurpleAir
+// from https://cfpub.epa.gov/si/si_public_record_report.cfm?dirEntryId=349513&Lab=CEMM&simplesearch=0&showcriteria=2&sortby=pubDate&timstype=&datebeginpublishedpresented=08/25/2018
 //Function to get AQI number from PPM reading
 module.exports.aqiFromPM = function (pm) {
 	if (pm > 350.5) {
