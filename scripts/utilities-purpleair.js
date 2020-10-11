@@ -15,7 +15,8 @@ async function _getSensorData(id) {
     let partLive = parseInt(stats.v1, 10)
     let partTime = parseInt(stats.v2, 10)
     let partDelta = partTime - partLive
-    let temp_f = json.results[0].temp_f		
+	// Tempertautre_F: Temperature inside of the sensor housing in Fahrenheit. On average, this is 8F higher than ambient conditions. (From BME280)
+    let temp_f = json.results[0].temp_f	- 8
     let temp_c = utilities.convertFtoC(temp_f)		
     
     if ( partDelta > 5 ) {
