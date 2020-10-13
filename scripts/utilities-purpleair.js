@@ -30,7 +30,8 @@ async function _getSensorData(id) {
     // Start Setup
     let adj1 = parseInt(json.results[0].pm2_5_cf_1, 10)
     let adj2 = parseInt(json.results[1].pm2_5_cf_1, 10)
-    let hum = parseInt(json.results[0].humidity, 10)
+	// Relative humidity inside of the sensor housing as a percentage. On average, this is 4% lower than ambient conditions (From BME280)
+    let hum = parseInt(json.results[0].humidity, 10) + 4
     let dataAverage = adj1;
 
     if (adj2 >= 0.0) {
